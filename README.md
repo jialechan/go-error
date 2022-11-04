@@ -26,3 +26,17 @@
 1. 我们在应用程序中使用`github.com/pkg/errors`处理应用错误，**注意在公共库当中，我们一般不使用这个**（❓，为什么？）
 2. `error`应该是函数的最后一个返回值，当`error`不为`nil`时，函数的其他返回值是不可用的状态，不应该对其他返回值做任何期待（✅，`func f()(io.Reader, *S1, error)` 在这里，我们不知道`io.Reader`中是否有数据，可能有，也有可能有一部分）
 3. 错误处理的时候应该先判断错误，`if err != nil`出现错误及时返回，使代码是一条流畅的直线，避免过多的嵌套.(✅)
+
+## 如何选择生成/处理error
+1. 在应用程序中出现错误时，使用`errors.New`或者`errors.Errorf`返回错误<details><summary>例子</summary>
+    ```go
+    func (u *usecese) usecase1() error {
+        money := u.repo.getMoney(uid)
+        if money < 10 {
+            errors.Errorf("用户余额不足, uid: %d, money: %d", uid, money)
+        }
+        // 其他逻辑
+        return nil
+    }    
+    ```    
+</details>
