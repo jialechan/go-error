@@ -19,3 +19,4 @@ func Go(f func()){
     }()
 }
 ```
+# error
