@@ -6,17 +6,17 @@
 5. 在程序中我们应该避免使用野生的goroutine（💡，含有io的场景是考虑协程的好时机）
     - 如果是在请求中需要执行异步任务，应该使用异步`worker`，消息通知的方式进行处理，避免请求量大时大量`goroutine`创建（💭，Go程序本来可以同时生成数百、数千甚至数万个`goroutine`）
     - 如果需要使用`goroutine`时，应该使用同一的`Go`函数进行创建，这个函数中会进行`recover`，避免因为野生`goroutine` `panic`导致主进程退出（✅，不过这个写法只支持`func()`这个类型的参数）
-```go
-func Go(f func()){
-    go func(){
-        defer func(){
-            if err := recover(); err != nil {
-                log.Printf("panic: %+v", err)
-            }
-        }()
+    ```go
+    func Go(f func()){
+        go func(){
+            defer func(){
+                if err := recover(); err != nil {
+                    log.Printf("panic: %+v", err)
+                }
+            }()
 
-        f()
-    }()
-}
-```
+            f()
+        }()
+    }
+    ```
 # error
