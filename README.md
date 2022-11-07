@@ -1,4 +1,4 @@
-## panic error?
+## panic or error?
 1. 在`Go`中`panic`会导致程序直接退出，是一个致命的错误，如果使用`panic` `recover`进行处理的话，会存在很多问题
     - 性能问题，频繁`panic` `recover`性能不好
     - 容易导致程序异常退出，只要有一个地方没有处理到就会导致程序进程整个退出
